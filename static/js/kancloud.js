@@ -61,6 +61,9 @@ function loadDocument($url, $id, $callback) {
         },
         complete : function () {
             NProgress.done();
+        },
+        error : function () {
+            layer.msg("加载失败");
         }
     });
 }
@@ -69,14 +72,17 @@ function loadDocument($url, $id, $callback) {
  * 初始化代码高亮
  */
 function initHighlighting() {
-    $('pre,pre.ql-syntax').each(function (i, block) {
-        if($(this).hasClass('prettyprinted')){
-            return;
-        }
-        hljs.highlightBlock(block);
-    });
-    hljs.initLineNumbersOnLoad();
-
+    try {
+        $('pre,pre.ql-syntax').each(function (i, block) {
+            if ($(this).hasClass('prettyprinted')) {
+                return;
+            }
+            hljs.highlightBlock(block);
+        });
+        hljs.initLineNumbersOnLoad();
+    }catch (e){
+        console.log(e);
+    }
 }
 
 
